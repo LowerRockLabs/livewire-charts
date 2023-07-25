@@ -1,3 +1,12 @@
+# Forked from [asantibanez/livewire-charts](https://github.com/asantibanez/livewire-charts)
+
+## New Features
+- Support for Livewire 3
+
+## Changes
+- Update to readme to clarify requirements/build processes
+
+
 [![GitHub release](https://img.shields.io/github/release/asantibanez/livewire-charts.svg)](https://github.com/asantibanez/livewire-charts/releases/)
 
 ![Livewire Charts](https://banners.beyondco.de/Livewire%20Charts.png?theme=light&packageName=asantibanez%2Flivewire-charts&pattern=graphPaper&style=style_1&description=Neat+Livewire+Charts+for+your+Laravel+projects&md=1&fontSize=100px&images=chart-square-bar)
@@ -11,6 +20,16 @@
 
 https://github.com/asantibanez/livewire-charts-demo
 
+## Requirements
+
+This package requires the following packages/libraries to work:
+- `Laravel Livewire v3` (https://laravel-livewire.com/) 
+- `Apex Charts` (https://apexcharts.com/)
+
+Please follow each package/library instructions on how to set them properly in your project.
+
+>Note: At the moment, `Apex Charts` is only supported for drawing charts.  
+
 ## Installation
 
 You can install the package via composer:
@@ -19,7 +38,26 @@ You can install the package via composer:
 composer require asantibanez/livewire-charts
 ```
 
-Next, you must export the package public scripts. To do this run `php artisan vendor:publish` 
+## Apex Charts Dependency
+
+### With a Build System
+Install apexcharts dependency
+```bash
+npm i apexcharts
+```
+
+Import the relevant files in your build script
+```bash
+import '../../vendor/asantibanez/livewire-charts/resources/js/app';
+```
+
+Ensure you run your build/dev processes, and that the following is *not* in your blades!
+```php
+@livewireChartsScripts
+```
+
+### Without a Build System
+Export the included package public scripts. To do this run `php artisan vendor:publish` 
 and export `livewire-charts:public`. This command will export a `vendor/livewire-charts` folder under the 
 `public` directory of your app.  
 
@@ -27,18 +65,10 @@ and export `livewire-charts:public`. This command will export a `vendor/livewire
 php artisan vendor:publish --tag=livewire-charts:public
 ```
 
-> Note: This last step can also be done using `livewire-charts:install` command in the artisan console.
+> Note: This step can also be done using `livewire-charts:install` command in the artisan console.
 
-## Requirements
+Add the directive `@livewireChartsScripts` to your layout file.
 
-This package requires the following packages/libraries to work:
-- `Laravel Livewire v2` (https://laravel-livewire.com/) 
-- `Alpine Js` (https://github.com/alpinejs/alpine)
-- `Apex Charts` (https://apexcharts.com/)
-
-Please follow each package/library instructions on how to set them properly in your project.
-
->Note: At the moment, `Apex Charts` is only supported for drawing charts.  
 
 ## Usage
 
@@ -78,13 +108,6 @@ With `$columnChartModel` at hand, we pass it to our `LivewireColumnChart` compon
     :column-chart-model="$columnChartModel"
 />
 ``` 
-
-Next, include the `@livewireChartsScripts` directive next to your other app scripts
-
-```html
-<livewire:scripts />
-@livewireChartsScripts
-```
 
 And that's it! You have a beautiful rendered chart in seconds. 👌
 
@@ -242,14 +265,6 @@ for each type of chart.
 | setDistributed(bool $distributed) | Set whether the chart uses distribution or not |
 
 
-## Advanced Usage - Integrating Scripts
-
-The directive `@livewireChartsScripts` adds a `script` tag that includes `public/vendor/livewire-charts/app.js`.
-If you want to include this script in your build system, you can export the package scripts 
-with `php artisan vendor:publish` and selecting `livewire-charts:scripts`. This will export `js/vendor/livewire-charts`
-inside your resources folder. You can then adjust imports as you see fit in your project.
-
->Note: You must remove @livewireChartsScripts directive so it doesn't clash with the scripts in your build system. 
 
 ## Troubleshooting
 
